@@ -20,8 +20,8 @@ author  = {Xiang, Xin and Wang, Zenghui and Zhang, Jun and Xia, Yi and Chen, Pen
 journal = {IEEE Transactions on Instrumentation and Measurement},   
 title   = {AGCA: An Adaptive Graph Channel Attention Module for Steel Surface Defect Detection},   
 year    = {2023},  
-volume  = {},  
+volume  = {75},  
 number  = {},  
-pages   = {1-1},  
+pages   = {1-12},  
 doi     = {10.1109/TIM.2023.3248111}}
 ```
