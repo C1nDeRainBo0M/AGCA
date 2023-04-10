@@ -12,9 +12,9 @@ class AGCA(nn.Module):
         self.softmax = nn.Softmax(2)
         # A0 needs to be placed on the GPU
         self.A0 = torch.eye(hide_channel).to('cuda')
-        # A1 is initialized to 1e-6
-        self.A1 = nn.Parameter(torch.FloatTensor(torch.zeros((hide_channel, hide_channel))), requires_grad=True)
-        init.constant_(self.A1, 1e-6)
+        # A2 is initialized to 1e-6
+        self.A2 = nn.Parameter(torch.FloatTensor(torch.zeros((hide_channel, hide_channel))), requires_grad=True)
+        init.constant_(self.A2, 1e-6)
         self.conv2 = nn.Conv1d(1, 1, kernel_size=1, bias=False)
         self.conv3 = nn.Conv1d(1, 1, kernel_size=1, bias=False)
         self.relu = nn.ReLU(inplace=True)
@@ -26,9 +26,9 @@ class AGCA(nn.Module):
         y = self.conv1(y)
         B, C, _, _ = y.size()
         y = y.flatten(2).transpose(1, 2)
-        A2 = self.softmax(self.conv2(y))
-        A2 = A2.expand(B, C, C)
-        A = (self.A0 * A2) + self.A1
+        A1 = self.softmax(self.conv2(y))
+        A1 = A1.expand(B, C, C)
+        A = (self.A0 * A1) + self.A2
         y = torch.matmul(y, A)
         y = self.relu(self.conv3(y))
         y = y.transpose(1, 2).view(-1, C, 1, 1)
