@@ -10,8 +10,9 @@ class AGCA(nn.Module):
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.conv1 = nn.Conv2d(in_channel, hide_channel, kernel_size=1, bias=False)
         self.softmax = nn.Softmax(2)
-        # A0 needs to be placed on the GPU
+        # Choose to deploy A0 on GPU or CPU according to your needs
         self.A0 = torch.eye(hide_channel).to('cuda')
+        # self.A0 = torch.eye(hide_channel)
         # A2 is initialized to 1e-6
         self.A2 = nn.Parameter(torch.FloatTensor(torch.zeros((hide_channel, hide_channel))), requires_grad=True)
         init.constant_(self.A2, 1e-6)
